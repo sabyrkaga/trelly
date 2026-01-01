@@ -86,7 +86,9 @@ export const App = () => {
             </div>
             <div>
               <strong>Дата создания задачи: </strong>
-              <span>{task.attributes.addedAt}</span>
+              <span>
+                {new Date(task.attributes.addedAt).toLocaleDateString()}
+              </span>
             </div>
           </li>
         ))}
