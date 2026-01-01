@@ -22,8 +22,8 @@ li {
   display: flex;
   flex-direction: column;
   row-gap: 10px;
+  color: #242424;
   padding: 24px 18px;
-  border: 1px solid orange;
   border-radius: 10px;
 }
 
