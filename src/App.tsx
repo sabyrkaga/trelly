@@ -27,6 +27,7 @@ export const App = () => {
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null)
   const [selectedTask, setSelectedTask] = useState<TaskDetailsData | null>(null)
   const [boardId, setBoardId] = useState<string | null>(null)
+  const [isTaskLoading, setIsTaskLoading] = useState<boolean>(false)
   const [tasks, setTasks] = useState<GlobalTaskListItemJsonApi[] | null>(null)
 
   useEffect(() => {
@@ -42,6 +43,9 @@ export const App = () => {
   useEffect(() => {
     if (!boardId || !selectedTaskId) return
 
+    setIsTaskLoading(true)
+    setSelectedTask(null)
+
     fetch(
       `https://trelly.it-incubator.app/api/1.0/boards/${boardId}/tasks/${selectedTaskId}`,
       {
@@ -52,6 +56,7 @@ export const App = () => {
     )
       .then((res) => res.json())
       .then((json) => setSelectedTask(json.data))
+      .finally(() => setIsTaskLoading(false))
   }, [boardId, selectedTaskId])
 
   if (tasks === null) {
@@ -133,17 +138,17 @@ export const App = () => {
         </ul>
         <div>
           <h2>Task details</h2>
-          {!selectedTaskId ? (
-            <p>Task is not selected</p>
-          ) : (
-            <>
+          {!selectedTaskId && <p>Task is not selected</p>}
+          {selectedTaskId && isTaskLoading && <p>Loading...</p>}
+          {selectedTask && (
+            <div>
               <p>Title: {selectedTask?.attributes.title}</p>
               <p>
                 Description:{' '}
                 {selectedTask?.attributes.description || 'No description'}
               </p>
               <p>Board Title: {selectedTask?.attributes.boardTitle}</p>
-            </>
+            </div>
           )}
         </div>
       </div>
