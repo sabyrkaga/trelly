@@ -64,6 +64,9 @@ export const App = () => {
   return (
     <>
       <h1>Список дел</h1>
+      <button onClick={() => setSelectedTaskId(null)}>
+        Сбросить выделение
+      </button>
       <ul>
         {tasks.map((task) => (
           <li
@@ -71,7 +74,7 @@ export const App = () => {
             style={{
               backgroundColor: `${priorities[task.priority]}`,
               border: `1.5px solid ${
-                task.id === selectedTaskId ? 'orange' : '#242424'
+                task.id === selectedTaskId ? '#646cff' : '#242424'
               }`,
             }}
             onClick={() => setSelectedTaskId(task.id)}
