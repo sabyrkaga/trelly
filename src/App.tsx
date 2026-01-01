@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 export const App = () => {
   const tasks = [
     {
@@ -37,6 +39,8 @@ export const App = () => {
     },
   ]
 
+  const [selectedTaskId, setSelectedTaskId] = useState<number | null>(null)
+
   if (tasks === null) {
     return (
       <>
@@ -64,7 +68,13 @@ export const App = () => {
         {tasks.map((task) => (
           <li
             key={task.id}
-            style={{ backgroundColor: `${priorities[task.priority]}` }}
+            style={{
+              backgroundColor: `${priorities[task.priority]}`,
+              border: `1.5px solid ${
+                task.id === selectedTaskId ? 'orange' : '#242424'
+              }`,
+            }}
+            onClick={() => setSelectedTaskId(task.id)}
           >
             <div>
               <strong>Заголовок: </strong>
