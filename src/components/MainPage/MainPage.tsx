@@ -17,7 +17,11 @@ export const MainPage = () => {
   return (
     <main>
       <Header resetSelection={handleResetSelection} />
-      <MainContent />
+      <MainContent
+        setSelectedTaskId={setSelectedTaskId}
+        setBoardId={setBoardId}
+        selectedTaskId={selectedTaskId}
+      />
     </main>
   )
 }
