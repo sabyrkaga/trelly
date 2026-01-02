@@ -18,9 +18,12 @@ export const MainPage = () => {
     <main>
       <Header resetSelection={handleResetSelection} />
       <MainContent
-        setSelectedTaskId={setSelectedTaskId}
+        boardId={boardId}
+        selectedTask={selectedTask}
+        setSelectedTask={setSelectedTask}
         setBoardId={setBoardId}
         selectedTaskId={selectedTaskId}
+        setSelectedTaskId={setSelectedTaskId}
       />
     </main>
   )
