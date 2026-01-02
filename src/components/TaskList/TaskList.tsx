@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import type { GlobalTaskListItemJsonApi } from '../../types'
+import { Task } from '../Task/Task'
 
 interface Props {
   setSelectedTaskId: (id: string | null) => void
@@ -7,7 +8,11 @@ interface Props {
   selectedTaskId: string | null
 }
 
-export const TaskList = ({ setSelectedTaskId, setBoardId, selectedTaskId }: Props) => {
+export const TaskList = ({
+  setSelectedTaskId,
+  setBoardId,
+  selectedTaskId,
+}: Props) => {
   const [tasks, setTasks] = useState<GlobalTaskListItemJsonApi[] | null>(null)
 
   useEffect(() => {
@@ -28,46 +33,14 @@ export const TaskList = ({ setSelectedTaskId, setBoardId, selectedTaskId }: Prop
       {tasks?.length === 0 && <p>Задачи отсутствуют</p>}
       <ul>
         {tasks?.map((task) => (
-          <li
+          <Task
             key={task.id}
-            style={{
-              backgroundColor: `${priorities[task.attributes.priority]}`,
-              border: `1.5px solid ${
-                task.id === selectedTaskId ? '#646cff' : '#242424'
-              }`,
-            }}
-            onClick={() => {
-              setSelectedTaskId(task.id)
-              setBoardId(task.attributes.boardId)
-            }}
-          >
-            <div>
-              <strong>Заголовок: </strong>
-              <span
-                style={{
-                  textDecorationLine: `${
-                    task.attributes.status === 2 ? 'line-through' : 'none'
-                  }`,
-                }}
-              >
-                {task.attributes.title}
-              </span>
-            </div>
-            <div>
-              <strong>Статус: </strong>
-              <input
-                type="checkbox"
-                checked={task.attributes.status === 2}
-                readOnly
-              />
-            </div>
-            <div>
-              <strong>Дата создания задачи: </strong>
-              <span>
-                {new Date(task.attributes.addedAt).toLocaleDateString()}
-              </span>
-            </div>
-          </li>
+            task={task}
+            setSelectedTaskId={setSelectedTaskId}
+            setBoardId={setBoardId}
+            selectedTaskId={selectedTaskId}
+            priorities={priorities}
+          />
         ))}
       </ul>
     </>
